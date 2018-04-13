@@ -46,14 +46,14 @@ type databaseInformer struct {
 
 // NewDatabaseInformer constructs a new informer for Database type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the controller.
+// one. This reduces memory footprint and number of connections to the server.
 func NewDatabaseInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
 	return NewFilteredDatabaseInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
 // NewFilteredDatabaseInformer constructs a new informer for Database type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the controller.
+// one. This reduces memory footprint and number of connections to the server.
 func NewFilteredDatabaseInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{

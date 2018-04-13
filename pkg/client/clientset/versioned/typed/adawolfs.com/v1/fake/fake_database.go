@@ -78,7 +78,7 @@ func (c *FakeDatabases) Watch(opts v1.ListOptions) (watch.Interface, error) {
 
 }
 
-// Create takes the representation of a database and creates it.  Returns the controller's representation of the database, and an error, if there is any.
+// Create takes the representation of a database and creates it.  Returns the server's representation of the database, and an error, if there is any.
 func (c *FakeDatabases) Create(database *adawolfs_com_v1.Database) (result *adawolfs_com_v1.Database, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewCreateAction(databasesResource, c.ns, database), &adawolfs_com_v1.Database{})
@@ -89,7 +89,7 @@ func (c *FakeDatabases) Create(database *adawolfs_com_v1.Database) (result *adaw
 	return obj.(*adawolfs_com_v1.Database), err
 }
 
-// Update takes the representation of a database and updates it. Returns the controller's representation of the database, and an error, if there is any.
+// Update takes the representation of a database and updates it. Returns the server's representation of the database, and an error, if there is any.
 func (c *FakeDatabases) Update(database *adawolfs_com_v1.Database) (result *adawolfs_com_v1.Database, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewUpdateAction(databasesResource, c.ns, database), &adawolfs_com_v1.Database{})

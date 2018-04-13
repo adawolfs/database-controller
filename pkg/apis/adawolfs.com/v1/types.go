@@ -18,9 +18,12 @@ type Database struct {
 
 // DatabaseSpec is the spec for a Foo resource
 type DatabaseSpec struct {
-	User     string `json:"user"`
-	Password string `json:"password"`
-	Encoding string `json:"encoding,omitempty"`
+	User		string `json:"user"`
+	Password	string `json:"password"`
+	Encoding	string `json:"encoding,omitempty"`
+	Collate		string `json:"collate,omitempty"`
+	Type		string `json:"type"`
+	Secret		string `json:"secretName"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

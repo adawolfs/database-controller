@@ -33,7 +33,7 @@ func (c *FakeAdawolfsV1) Databases(namespace string) v1.DatabaseInterface {
 }
 
 // RESTClient returns a RESTClient that is used to communicate
-// with API controller by this client implementation.
+// with API server by this client implementation.
 func (c *FakeAdawolfsV1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret

@@ -3,7 +3,7 @@ package controller
 import (
 	"k8s.io/client-go/kubernetes"
 	//appsv1 "k8s.io/api/apps/v1"
-	corev1 "k8s.io/api/core/v1"
+	corev1 "k8s.io/client-go/pkg/api/v1"
 
 	informers "github.com/adawolfs/database-controller/pkg/client/informers/externalversions"
 	clientset "github.com/adawolfs/database-controller/pkg/client/clientset/versioned"
@@ -21,13 +21,15 @@ import (
 	
 
 	adawolfscomv1 "github.com/adawolfs/database-controller/pkg/apis/adawolfs.com/v1"
-	
+
 	"k8s.io/client-go/tools/record"
 	"github.com/golang/glog"
 	"fmt"
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"time"
+	"github.com/adawolfs/database-controller/pkg/config"
+	"github.com/adawolfs/database-controller/pkg/plugins"
 )
 
 type DatabaseController struct {
@@ -52,6 +54,8 @@ type DatabaseController struct {
 	// recorder is an event recorder for recording Event resources to the
 	// Kubernetes API.
 	recorder	record.EventRecorder
+
+	DBConfig  *config.DBConfig
 }
 
 const (
@@ -268,9 +272,17 @@ func (c *DatabaseController) syncHandler(key string) error {
 	// Finally, we update the status block of the Foo resource to reflect the
 	// current state of the world
 	err = c.updateDBStatus(db)
+
 	if err != nil {
 		return err
 	}
+
+	var handler plugins.DatabaseHandler
+	if db.Spec.Type == "mysql" {
+		handler = plugins.NewMysqlHandlers(c.DBConfig.Databases["mysql"])
+	}
+
+	handler.AddDatabase(db)
 
 	c.recorder.Event(db, corev1.EventTypeNormal, SuccessSynced, MessageResourceSynced)
 	return nil

@@ -81,7 +81,7 @@ func setConfigDefaults(config *rest.Config) error {
 }
 
 // RESTClient returns a RESTClient that is used to communicate
-// with API controller by this client implementation.
+// with API server by this client implementation.
 func (c *AdawolfsV1Client) RESTClient() rest.Interface {
 	if c == nil {
 		return nil

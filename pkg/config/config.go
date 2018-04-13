@@ -9,15 +9,15 @@ import (
 )
 
 
-type DatabaseConfig struct {
+type Database struct {
 	Name	string	`yaml:"name"`
-	Type	string	`yaml:"kind"`
+	Type	string	`yaml:"type"`
 	URL		string	`yaml:"url"`
 	Class	string	`yaml:"class"`
 }
 
 type DBConfig struct {
-	Databases	[]DatabaseConfig	`yaml:"databases"`
+	Databases map[string]Database `yaml:"Databases"`
 }
 
 func read_config(filename string) (*DBConfig, error) {

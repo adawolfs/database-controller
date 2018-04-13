@@ -95,7 +95,7 @@ func (c *databases) Watch(opts meta_v1.ListOptions) (watch.Interface, error) {
 		Watch()
 }
 
-// Create takes the representation of a database and creates it.  Returns the controller's representation of the database, and an error, if there is any.
+// Create takes the representation of a database and creates it.  Returns the server's representation of the database, and an error, if there is any.
 func (c *databases) Create(database *v1.Database) (result *v1.Database, err error) {
 	result = &v1.Database{}
 	err = c.client.Post().
@@ -107,7 +107,7 @@ func (c *databases) Create(database *v1.Database) (result *v1.Database, err erro
 	return
 }
 
-// Update takes the representation of a database and updates it. Returns the controller's representation of the database, and an error, if there is any.
+// Update takes the representation of a database and updates it. Returns the server's representation of the database, and an error, if there is any.
 func (c *databases) Update(database *v1.Database) (result *v1.Database, err error) {
 	result = &v1.Database{}
 	err = c.client.Put().

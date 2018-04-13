@@ -19,7 +19,7 @@ type DBConfig struct {
 	Databases map[string]Database `yaml:"Databases"`
 }
 
-func read_config(filename string) (*DBConfig, error) {
+func ParseConfig(filename string) (*DBConfig, error) {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err

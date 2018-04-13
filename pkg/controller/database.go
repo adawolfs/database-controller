@@ -79,7 +79,8 @@ func NewDatabaseController(
 	kubeClientSet kubernetes.Interface,
 	customClientSet clientset.Interface,
 	kubeInformerFactory kubeinformers.SharedInformerFactory,
-	customInformerFactory informers.SharedInformerFactory) *DatabaseController {
+	customInformerFactory informers.SharedInformerFactory,
+	dbConfig *config.DBConfig) *DatabaseController {
 
 	//deploymentInformer := kubeInformerFactory.Apps().V1().Deployments()
 
@@ -104,6 +105,7 @@ func NewDatabaseController(
 		dbSynced:			dbInformer.Informer().HasSynced,
 		workqueue:			workqueue.NewNamedRateLimitingQueue(workqueue.DefaultControllerRateLimiter(), "Databases"),
 		recorder: 			recorder,
+		DBConfig:			dbConfig,
 	}
 
 	glog.Info("Setting up event handlers")

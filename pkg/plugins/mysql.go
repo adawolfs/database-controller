@@ -6,6 +6,7 @@ import (
 	"strings"
 	"net/url"
 	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/sethvargo/go-password/password"
 	"github.com/adawolfs/database-controller/pkg/config"
 	adawolfs "github.com/adawolfs/database-controller/pkg/apis/adawolfs.com/v1"

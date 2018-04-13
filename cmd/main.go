@@ -16,12 +16,15 @@ import (
 	"k8s.io/sample-controller/pkg/signals"
 
 	"github.com/adawolfs/database-controller/pkg/controller"
+	"github.com/adawolfs/database-controller/pkg/config"
+	"log"
+	"os"
 )
 
 var (
 	masterURL	string
 	kubeconfig	string
-	config		string
+	configFile	string
 )
 
 func main() {
@@ -48,7 +51,13 @@ func main() {
 	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)
 	exampleInformerFactory := informers.NewSharedInformerFactory(exampleClient, time.Second*30)
 
-	controller := controller.NewDatabaseController(kubeClient, exampleClient, kubeInformerFactory, exampleInformerFactory)
+	dbconfig, err := config.ParseConfig(configFile)
+	if err != nil {
+		log.Println("failed to read configuration:", err)
+		os.Exit(1)
+	}
+
+	controller := controller.NewDatabaseController(kubeClient, exampleClient, kubeInformerFactory, exampleInformerFactory, dbconfig)
 
 	go kubeInformerFactory.Start(stopCh)
 	go exampleInformerFactory.Start(stopCh)
@@ -61,5 +70,5 @@ func main() {
 func init() {
 	flag.StringVar(&kubeconfig, "kubeconfig", "/home/adawolfs/.kube/config", "Path to a kubeconfig. Only required if out-of-cluster.")
 	flag.StringVar(&masterURL, "master", "https://cluster.digitalgeko.com", "The address of the Kubernetes API controller. Overrides any value in kubeconfig. Only required if out-of-cluster.")
-	flag.StringVar(&config, "config", "config.yaml", "Path to YAML configuration file.")
+	flag.StringVar(&configFile, "config", "/home/adawolfs/go/src/github.com/adawolfs/database-controller/cmd/config.yml", "Path to YAML configuration file.")
 }

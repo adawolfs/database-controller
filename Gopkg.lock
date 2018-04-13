@@ -102,6 +102,12 @@
   version = "1.0.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/sethvargo/go-password"
+  packages = ["password"]
+  revision = "ffbf40db2a6096ca42297c333c46e53f8d732228"
+
+[[projects]]
   name = "github.com/spf13/pflag"
   packages = ["."]
   revision = "583c0c0531f06d5278b7d917446061adc344b5cd"
@@ -399,6 +405,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "aa327dfe8fe3775b12ee5554a2ff84764002289de3ee862aa840df22d7d18184"
+  inputs-digest = "70fe90992c929c4dca9809b018a1142cfeb12564698ea3486099b182abf004c8"
   solver-name = "gps-cdcl"
   solver-version = 1

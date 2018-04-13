@@ -28,6 +28,8 @@ import (
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"time"
+	"github.com/adawolfs/database-controller/pkg/plugins"
+	"github.com/adawolfs/database-controller/pkg/config"
 )
 
 type DatabaseController struct {
@@ -52,6 +54,8 @@ type DatabaseController struct {
 	// recorder is an event recorder for recording Event resources to the
 	// Kubernetes API.
 	recorder	record.EventRecorder
+
+	DBConfig  *config.DBConfig
 }
 
 const (
@@ -271,6 +275,13 @@ func (c *DatabaseController) syncHandler(key string) error {
 	if err != nil {
 		return err
 	}
+
+	var handler plugins.DatabaseHandler
+	if db.Spec.Type == "mysql" {
+		handler = plugins.NewMysqlHandlers(c.DBConfig.Databases["mysql"])
+	}
+
+	handler.AddDatabase(db)
 
 	c.recorder.Event(db, corev1.EventTypeNormal, SuccessSynced, MessageResourceSynced)
 	return nil

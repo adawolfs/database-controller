@@ -19,8 +19,9 @@ import (
 )
 
 var (
-	masterURL  string
-	kubeconfig string
+	masterURL	string
+	kubeconfig	string
+	config		string
 )
 
 func main() {
@@ -58,7 +59,7 @@ func main() {
 }
 
 func init() {
-	flag.StringVar(&kubeconfig, "kubeconfig", "", "Path to a kubeconfig. Only required if out-of-cluster.")
-	flag.StringVar(&masterURL, "master", "", "The address of the Kubernetes API controller. Overrides any value in kubeconfig. Only required if out-of-cluster.")
-	flag.StringVar(&kubeconfig, "kubeconfig", "config.yaml", "Path to YAML configuration file.")
+	flag.StringVar(&kubeconfig, "kubeconfig", "/home/adawolfs/.kube/config", "Path to a kubeconfig. Only required if out-of-cluster.")
+	flag.StringVar(&masterURL, "master", "https://cluster.digitalgeko.com", "The address of the Kubernetes API controller. Overrides any value in kubeconfig. Only required if out-of-cluster.")
+	flag.StringVar(&config, "config", "config.yaml", "Path to YAML configuration file.")
 }
